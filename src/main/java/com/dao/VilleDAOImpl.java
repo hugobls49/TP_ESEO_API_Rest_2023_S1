@@ -17,8 +17,10 @@ import com.dto.Ville;
 public class VilleDAOImpl implements VilleDAO{
 
 	private FactoryDAO factoryDAO = FactoryDAO.getInstance();
+	
     private static final Logger LOGGER = LoggerFactory.getLogger(VilleDAOImpl.class);
-
+    
+    private static final String CONTEXT = "context";  // Compliant
 	
 	public List<Ville> findAllVilles(){
 		
@@ -41,7 +43,7 @@ public class VilleDAOImpl implements VilleDAO{
             	   listVille.add(ville);
                }
            } catch (Exception e) {
-               LOGGER.error("context", e);
+               LOGGER.error(CONTEXT, e);
            }
 		return listVille;
 	}
@@ -66,7 +68,7 @@ public class VilleDAOImpl implements VilleDAO{
             	   ville.setLongitude(resultSet.getDouble("Longitude"));
                }
            } catch (Exception e) {
-               LOGGER.error("context", e);
+               LOGGER.error(CONTEXT, e);
            }
 		return ville;
 	}
@@ -81,7 +83,7 @@ public class VilleDAOImpl implements VilleDAO{
 	        statement.setLong(1, id);
 	        statement.executeUpdate();
 	    } catch (Exception e) {
-            LOGGER.error("context", e);
+            LOGGER.error(CONTEXT, e);
         }
 	}
 	
@@ -107,7 +109,7 @@ public class VilleDAOImpl implements VilleDAO{
 	        }
 	        updatedVille = ville;
 	    } catch (Exception e) {
-            LOGGER.error("context", e);
+            LOGGER.error(CONTEXT, e);
         }
 	    return updatedVille;
 	}
@@ -132,7 +134,7 @@ public class VilleDAOImpl implements VilleDAO{
 				throw new SQLException("Failed to insert Ville into database.");
 			}
 		} catch (Exception e) {
-            LOGGER.error("context", e);
+            LOGGER.error(CONTEXT, e);
         }
 		return ville;
 	}
