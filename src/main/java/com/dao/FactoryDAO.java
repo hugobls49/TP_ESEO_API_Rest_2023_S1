@@ -4,10 +4,16 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class FactoryDAO {
     private String url;
     private String username;
     private String password;
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(VilleDAOImpl.class);
+
 
     FactoryDAO(String url, String username, String password) {
         this.url = url;
@@ -18,14 +24,10 @@ public class FactoryDAO {
     public static FactoryDAO getInstance() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-
+        } catch (Exception e) {
+        	LOGGER.error("context", e);
         }
-
-        FactoryDAO instance = new FactoryDAO("jdbc:mysql://localhost:3306/ProjetJavaEE", "root", "network");
-
-
-        return instance;
+        return new FactoryDAO("jdbc:mysql://localhost:3306/ProjetJavaEE", "root", "network");
     }
 
     public Connection getConnection() throws SQLException {

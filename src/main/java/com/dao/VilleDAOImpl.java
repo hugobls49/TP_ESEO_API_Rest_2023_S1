@@ -5,7 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.dto.Ville;
@@ -14,10 +17,12 @@ import com.dto.Ville;
 public class VilleDAOImpl implements VilleDAO{
 
 	private FactoryDAO factoryDAO = FactoryDAO.getInstance();
+    private static final Logger LOGGER = LoggerFactory.getLogger(VilleDAOImpl.class);
+
 	
-	public ArrayList<Ville> findAllVilles(){
+	public List<Ville> findAllVilles(){
 		
-		ArrayList<Ville> listVille = new ArrayList<Ville>();
+		List<Ville> listVille = new ArrayList<>();
 		
         try (
         		Connection connection = factoryDAO.getConnection();
@@ -29,20 +34,15 @@ public class VilleDAOImpl implements VilleDAO{
             	   ville.setCodeCommune(resultSet.getString("Code_commune_INSEE"));
             	   ville.setNomCommune(resultSet.getString("Nom_commune"));
             	   ville.setCodePostal(resultSet.getString("Code_postal"));
-            	   ville.setLibelle_acheminement(resultSet.getString("Libelle_acheminement"));
+            	   ville.setLibelleAcheminement(resultSet.getString("Libelle_acheminement"));
             	   ville.setLigne5(resultSet.getString("Ligne_5"));
             	   ville.setLatitude(resultSet.getDouble("Latitude"));
             	   ville.setLongitude(resultSet.getDouble("Longitude"));
             	   listVille.add(ville);
                }
-               
-               statement.close();
-               connection.close();
-           } catch (SQLException e) {
-               e.printStackTrace();
+           } catch (Exception e) {
+               LOGGER.error("context", e);
            }
-		
-		System.out.println("findAllVilles");
 		return listVille;
 	}
 
@@ -60,19 +60,14 @@ public class VilleDAOImpl implements VilleDAO{
             	   ville.setCodeCommune(resultSet.getString("Code_commune_INSEE"));
             	   ville.setNomCommune(resultSet.getString("Nom_commune"));
             	   ville.setCodePostal(resultSet.getString("Code_postal"));
-            	   ville.setLibelle_acheminement(resultSet.getString("Libelle_acheminement"));
+            	   ville.setLibelleAcheminement(resultSet.getString("Libelle_acheminement"));
             	   ville.setLigne5(resultSet.getString("Ligne_5"));
             	   ville.setLatitude(resultSet.getDouble("Latitude"));
             	   ville.setLongitude(resultSet.getDouble("Longitude"));
                }
-               
-               statement.close();
-               connection.close();
-           } catch (SQLException e) {
-               e.printStackTrace();
+           } catch (Exception e) {
+               LOGGER.error("context", e);
            }
-		
-		System.out.println("ville trouvé");
 		return ville;
 	}
 
@@ -85,9 +80,9 @@ public class VilleDAOImpl implements VilleDAO{
 	    ) {
 	        statement.setLong(1, id);
 	        statement.executeUpdate();
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
+	    } catch (Exception e) {
+            LOGGER.error("context", e);
+        }
 	}
 	
 	public Ville updateVille(Long id, Ville ville) {
@@ -100,7 +95,7 @@ public class VilleDAOImpl implements VilleDAO{
 	        statement.setString(1, ville.getCodeCommune());
 	        statement.setString(2, ville.getNomCommune());
 	        statement.setString(3, ville.getCodePostal());
-	        statement.setString(4, ville.getLibelle_acheminement());
+	        statement.setString(4, ville.getLibelleAcheminement());
 	        statement.setString(5, ville.getLigne5());
 	        statement.setDouble(6, ville.getLatitude());
 	        statement.setDouble(7, ville.getLongitude());
@@ -110,11 +105,10 @@ public class VilleDAOImpl implements VilleDAO{
 	        if (rowsUpdated == 0) {
 	            throw new SQLException("Failed to update Ville with ID: " + id);
 	        }
-	        System.out.println("Ville with ID " + id + " updated successfully.");
 	        updatedVille = ville;
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
+	    } catch (Exception e) {
+            LOGGER.error("context", e);
+        }
 	    return updatedVille;
 	}
 
@@ -128,7 +122,7 @@ public class VilleDAOImpl implements VilleDAO{
 			statement.setString(1, ville.getCodeCommune());
 			statement.setString(2, ville.getNomCommune());
 			statement.setString(3, ville.getCodePostal());
-			statement.setString(4, ville.getLibelle_acheminement());
+			statement.setString(4, ville.getLibelleAcheminement());
 			statement.setString(5, ville.getLigne5());
 			statement.setDouble(6, ville.getLatitude());
 			statement.setDouble(7, ville.getLongitude());
@@ -137,11 +131,9 @@ public class VilleDAOImpl implements VilleDAO{
 			if (rowsInserted == 0) {
 				throw new SQLException("Failed to insert Ville into database.");
 			}
-
-			System.out.println("Ville added successfully.");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) {
+            LOGGER.error("context", e);
+        }
 		return ville;
 	}
 

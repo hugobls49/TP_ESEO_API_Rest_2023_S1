@@ -1,12 +1,12 @@
 package com.blo;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.dto.Ville;
 
 public interface VilleBLO {
 
-	public ArrayList<Ville> getInfoVilles();
+	public List<Ville> getInfoVilles();
 	
 	public Ville findVillebyCodePostal(String ville);
 

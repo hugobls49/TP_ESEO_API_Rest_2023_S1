@@ -1,12 +1,12 @@
 package com.dao;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.dto.Ville;
 
 public interface VilleDAO {
 
-	public ArrayList<Ville> findAllVilles();
+	public List<Ville> findAllVilles();
 	
 	public Ville findVillebyCodePostal(String ville);
 
