@@ -5,8 +5,8 @@ public class Ville {
 	private String codeCommune;
 	private String libelle_acheminement;
 	private String Ligne5;
-	private String Latitude;
-	private String Longitude;
+	private Double Latitude;
+	private Double Longitude;
 	private String codePostal;
 	private String nomCommune;
 	
@@ -53,19 +53,19 @@ public class Ville {
 		Ligne5 = ligne5;
 	}
 
-	public String getLatitude() {
+	public Double getLatitude() {
 		return Latitude;
 	}
 
-	public void setLatitude(String latitude) {
+	public void setLatitude(Double latitude) {
 		Latitude = latitude;
 	}
 
-	public String getLongitude() {
+	public Double getLongitude() {
 		return Longitude;
 	}
 
-	public void setLongitude(String longitude) {
+	public void setLongitude(Double longitude) {
 		Longitude = longitude;
 	}
 	

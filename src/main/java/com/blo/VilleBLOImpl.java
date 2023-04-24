@@ -14,12 +14,44 @@ public class VilleBLOImpl implements VilleBLO{
 	@Autowired
 	private VilleDAO villeDAO;
 	
-	public ArrayList<Ville> getInfoVilles(String codePostal){
+	public ArrayList<Ville> getInfoVilles(){
 		
 		ArrayList<Ville> listVille = new ArrayList<Ville>();
 		listVille = villeDAO.findAllVilles();
 		
 		return listVille;
+	}
+
+	@Override
+	public Ville findVillebyCodePostal(String ville2) {
+		
+		Ville ville = villeDAO.findVillebyCodePostal(ville2);
+		
+		return ville;
+	}
+
+	@Override
+	public String supprimer(Long id) {
+
+		villeDAO.supprimer(id);
+		return "Ville supprimée !";
+		
+	}
+
+	@Override
+	public Ville updateVille(Long id, Ville ville) {
+
+		Ville updateVille = villeDAO.updateVille(id, ville);
+		
+		return updateVille;
+	}
+
+	@Override
+	public Ville createVille(Ville ville) {
+
+		Ville newVille = villeDAO.createVille(ville);
+		
+		return newVille;
 	}
 
 }
